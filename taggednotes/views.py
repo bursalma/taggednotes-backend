@@ -11,7 +11,7 @@ from .serializers import NoteSerializer, SectionSerializer, \
 class BaseViewSet(ModelViewSet):
     def get_queryset(self):
         section = self.kwargs.get('section')
-
+        # this is a test
         if section == 'all':
             return self.model.objects.all()
 
