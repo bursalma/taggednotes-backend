@@ -13,12 +13,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import dj_database_url
 from pathlib import Path
 from os import getenv
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# CLIENT_DIR = BASE_DIR.parent.parent / 'client' / 'build'
 
 DEV_ENV = getenv('DJANGO_ENV') == 'development'
 
@@ -137,7 +136,7 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# STATIC_ROOT = 'static'
+
 # STATICFILES_DIRS = (BASE_DIR / 'static', )
 
 # if not DEV_ENV:
@@ -147,6 +146,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #         )
 #     }
 
-
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+SESSION_COOKIE_SECURE = not DEV_ENV
+CSRF_COOKIE_SECURE = not DEV_ENV
+SECURE_SSL_REDIRECT = not DEV_ENV
