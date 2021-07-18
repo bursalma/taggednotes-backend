@@ -29,7 +29,7 @@ SECRET_KEY = getenv('DJANGO_SECRET_KEY',
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEV_ENV
 
-ALLOWED_HOSTS = ['127.0.0.1', 'taggednotes.com', '*']
+ALLOWED_HOSTS = ['127.0.0.1', 'taggednotes.com', '*', '.herokuapp.com']
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'taggednotes'
 ]
 
@@ -158,3 +159,20 @@ CSRF_COOKIE_SECURE = not DEV_ENV
 SECURE_SSL_REDIRECT = not DEV_ENV
 
 SITE_ID = 1
+
+# REST_FRAMEWORK = {     
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.TokenAuthentication'
+#     ],
+# }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    )
+}
+
+REST_USE_JWT = True
+
+JWT_AUTH_COOKIE = 'tn-auth'
+JWT_AUTH_REFRESH_COOKIE = 'tn-refresh-token'

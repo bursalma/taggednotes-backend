@@ -12,6 +12,7 @@ psycopg2-binary = "*"
 dj-database-url = "*"
 whitenoise = "*"
 dj-rest-auth = {extras = ["with_social"], version = "*"}
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 faker = "*"

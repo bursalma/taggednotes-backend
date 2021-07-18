@@ -9,6 +9,7 @@ from .models import Note, Section, Tag
 from .serializers import NoteSerializer, SectionSerializer, \
                          TagSerializer
 
+from django.contrib.auth.models import User
 
 class BaseViewSet(ModelViewSet):
     def get_queryset(self):
@@ -17,7 +18,7 @@ class BaseViewSet(ModelViewSet):
         if section == 'all':
             return self.model.objects.all()
 
-        return self.model.objects.filter(section=self.kwargs.get('section')).all()
+        return self.model.objects.filter(section=section).all()
 
 
 class NoteSectionViewSet(BaseViewSet):
@@ -49,4 +50,5 @@ class TagSectionViewSet(BaseViewSet):
 
 class HealthView(APIView):
     def get(self, request):
+        print(User.objects.all())
         return Response({'healthy': True})
