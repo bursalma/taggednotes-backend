@@ -16,15 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-# from . import views
-
 
 urlpatterns = [
     path('api/', include('taggednotes.urls')),
-    path('admin/', admin.site.urls),
-    # path('', views.IndexView.as_view()),
-    # path('manifest.json', views.ManifestView.as_view()),
-    # path('logo192.png', views.Logo1View.as_view()),
-    # path('logo512.png', views.Logo5View.as_view()),
-    # path('favicon.ico', views.IconView.as_view())
+    path('auth/', include('dj_rest_auth.urls')),
+    path('auth/register/', include('dj_rest_auth.registration.urls')),
+    path('admin/', admin.site.urls)
+    
 ]

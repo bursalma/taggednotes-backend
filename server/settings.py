@@ -41,8 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    'allauth',
+    'allauth.account',
     'taggednotes'
 ]
 
@@ -150,3 +156,5 @@ DATABASES['default'].update(db_from_env)
 SESSION_COOKIE_SECURE = not DEV_ENV
 CSRF_COOKIE_SECURE = not DEV_ENV
 SECURE_SSL_REDIRECT = not DEV_ENV
+
+SITE_ID = 1

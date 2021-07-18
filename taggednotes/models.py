@@ -12,7 +12,7 @@ from django.db import models
 
 class Section(models.Model):
     id = models.AutoField(primary_key=True)
-    rank = models.PositiveIntegerField()
+    rank = models.PositiveIntegerField(blank=True)
     name = models.CharField(max_length=30)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     tag_rank = models.PositiveIntegerField(default=0)

@@ -1,7 +1,9 @@
-from rest_framework.permissions import AllowAny
+# from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Note, Section, Tag
 from .serializers import NoteSerializer, SectionSerializer, \
@@ -11,7 +13,7 @@ from .serializers import NoteSerializer, SectionSerializer, \
 class BaseViewSet(ModelViewSet):
     def get_queryset(self):
         section = self.kwargs.get('section')
-        # this is a test
+
         if section == 'all':
             return self.model.objects.all()
 
@@ -21,19 +23,22 @@ class BaseViewSet(ModelViewSet):
 class NoteSectionViewSet(BaseViewSet):
     model = Note
     serializer_class = NoteSerializer
-    permission_classes = [AllowAny]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
 
 class SectionViewSet(ModelViewSet):
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
-    permission_classes = [AllowAny]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
 
 class TagSectionViewSet(BaseViewSet):
     model = Tag
     serializer_class = TagSerializer
-    permission_classes = [AllowAny]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
 
 # class UserViewSet(ModelViewSet):

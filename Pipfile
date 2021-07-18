@@ -11,6 +11,7 @@ gunicorn = "*"
 psycopg2-binary = "*"
 dj-database-url = "*"
 whitenoise = "*"
+dj-rest-auth = {extras = ["with_social"], version = "*"}
 
 [dev-packages]
 faker = "*"
