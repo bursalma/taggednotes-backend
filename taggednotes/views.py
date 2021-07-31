@@ -1,4 +1,3 @@
-# from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,10 +8,12 @@ from .models import Note, Section, Tag
 from .serializers import NoteSerializer, SectionSerializer, \
                          TagSerializer
 
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 class BaseViewSet(ModelViewSet):
     def get_queryset(self):
+        print(self.request.user)
+
         section = self.kwargs.get('section')
 
         if section == 'all':
@@ -24,31 +25,24 @@ class BaseViewSet(ModelViewSet):
 class NoteSectionViewSet(BaseViewSet):
     model = Note
     serializer_class = NoteSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class SectionViewSet(ModelViewSet):
-    queryset = Section.objects.all()
+    model = Section
     serializer_class = SectionSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.model.objects.all()
 
 
 class TagSectionViewSet(BaseViewSet):
     model = Tag
     serializer_class = TagSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
-
-
-# class UserViewSet(ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 
 class HealthView(APIView):
     def get(self, request):
-        print(User.objects.all())
         return Response({'healthy': True})
