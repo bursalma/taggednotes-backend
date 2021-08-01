@@ -6,13 +6,15 @@ django.setup()
 
 import random
 from taggednotes.models import Note, Tag, Section
+from django.contrib.auth.models import User
 from faker import Faker
 fakegen = Faker()
 
+user = User.objects.all()[0]
 
 def populate_sections(n: int):
     for i in range(n):
-        section = Section.objects.create(name=fakegen.word(), rank=i,
+        section = Section.objects.create(name=fakegen.word(), rank=i, user=user,
                                          tag_rank=0, note_rank=0)
         section.save()
 
@@ -23,7 +25,7 @@ def populate_tags(n: int):
     for _ in range(n):
         section = random.choice(sections)
         section.tag_rank += 1
-        tag = Tag.objects.create(rank=section.tag_rank,
+        tag = Tag.objects.create(rank=section.tag_rank, user=user,
                                  label=fakegen.word(),
                                  section=section)
         section.save()
@@ -37,7 +39,7 @@ def populate_notes(n: int, rel: int):
     for _ in range(n):
         section = random.choice(sections)
         section.note_rank += 1
-        note = Note.objects.create(rank=section.note_rank,
+        note = Note.objects.create(rank=section.note_rank, user=user,
                                    title=fakegen.sentence(),
                                    content=fakegen.paragraph(),
                                    section=section)

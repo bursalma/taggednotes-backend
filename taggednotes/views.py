@@ -8,39 +8,42 @@ from .models import Note, Section, Tag
 from .serializers import NoteSerializer, SectionSerializer, \
                          TagSerializer
 
-# from django.contrib.auth.models import User
 
 class BaseViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     def get_queryset(self):
         print(self.request.user)
-
+        user = self.request.user
         section = self.kwargs.get('section')
+        objects = self.model.objects
 
         if section == 'all':
-            return self.model.objects.all()
+            return objects.filter(user=user).all()
 
-        return self.model.objects.filter(section=section).all()
-
-
-class NoteSectionViewSet(BaseViewSet):
-    model = Note
-    serializer_class = NoteSerializer
-    permission_classes = [IsAuthenticated]
+        return objects.filter(user=user).filter(section=section).all()
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
-class SectionViewSet(ModelViewSet):
+class SectionViewSet(BaseViewSet):
     model = Section
     serializer_class = SectionSerializer
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return self.model.objects.all()
+        user = self.request.user
+        return self.model.objects.filter(user=user).all()
 
 
 class TagSectionViewSet(BaseViewSet):
     model = Tag
     serializer_class = TagSerializer
-    permission_classes = [IsAuthenticated]
+
+
+class NoteSectionViewSet(BaseViewSet):
+    model = Note
+    serializer_class = NoteSerializer
 
 
 class HealthView(APIView):

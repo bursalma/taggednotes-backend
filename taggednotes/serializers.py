@@ -22,9 +22,3 @@ class NoteSerializer(ModelSerializer):
     class Meta:
         fields = ('id', 'rank', 'title', 'content', 'section', 'tag_set')
         model = Note
-
-
-# class UserSerializer(ModelSerializer):
-#     class Meta:
-#         fields = ('id', 'email', 'password')
-#         model = User

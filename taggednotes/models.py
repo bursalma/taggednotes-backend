@@ -1,20 +1,12 @@
 from django.db import models
-# from django.contrib.auth.models import User
-
-# class User(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     email = models.EmailField(max_length=85, unique=True)
-#     password = models.TextField(max_length=200)
-
-#     def __str__(self):
-#         return self.email
+from django.contrib.auth.models import User
 
 
 class Section(models.Model):
     id = models.AutoField(primary_key=True)
-    rank = models.PositiveIntegerField(blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    rank = models.PositiveIntegerField(default=0)
     name = models.CharField(max_length=30)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     tag_rank = models.PositiveIntegerField(default=0)
     note_rank = models.PositiveIntegerField(default=0)
 
@@ -24,7 +16,8 @@ class Section(models.Model):
 
 class Note(models.Model):
     id = models.AutoField(primary_key=True)
-    rank = models.PositiveIntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    rank = models.PositiveIntegerField(default=0)
     title = models.CharField(max_length=999)
     content = models.TextField(max_length=19999)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
@@ -35,7 +28,8 @@ class Note(models.Model):
 
 class Tag(models.Model):
     id = models.AutoField(primary_key=True)
-    rank = models.PositiveIntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    rank = models.PositiveIntegerField(default=0)
     label = models.CharField(max_length=51, unique=True)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     notes = models.ManyToManyField(Note)
