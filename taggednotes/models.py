@@ -30,7 +30,7 @@ class Tag(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     rank = models.PositiveIntegerField(default=1)
-    label = models.CharField(max_length=51, unique=True)
+    label = models.CharField(max_length=51)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     notes = models.ManyToManyField(Note)
 
