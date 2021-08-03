@@ -1,4 +1,5 @@
-from rest_framework.serializers import ModelSerializer, SlugRelatedField
+from rest_framework.serializers import ModelSerializer, SlugRelatedField, \
+                                       PrimaryKeyRelatedField
 from .models import Note, Section, Tag
 
 
@@ -9,7 +10,8 @@ class SectionSerializer(ModelSerializer):
 
 
 class TagSerializer(ModelSerializer):
-    notes = SlugRelatedField(many=True, read_only=True, slug_field='id')
+    notes = PrimaryKeyRelatedField(many=True, queryset=Note.objects.all(),
+                                   required=False)
 
     class Meta:
         fields = ('id', 'rank', 'label', 'section', 'notes')
@@ -17,7 +19,8 @@ class TagSerializer(ModelSerializer):
 
 
 class NoteSerializer(ModelSerializer):
-    tag_set = SlugRelatedField(many=True, read_only=True, slug_field='id')
+    tag_set = PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all(), 
+                                     required=False)
 
     class Meta:
         fields = ('id', 'rank', 'title', 'content', 'section', 'tag_set')
