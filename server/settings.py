@@ -147,13 +147,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # STATICFILES_DIRS = (BASE_DIR / 'static', )
 
-# if not DEV_ENV:
-#     REST_FRAMEWORK = {
-#         'DEFAULT_RENDERER_CLASSES': (
-#             'rest_framework.renderers.JSONRenderer',
-#         )
-#     }
-
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
@@ -169,14 +162,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-# REST_SESSION_LOGIN = False
-# JWT_AUTH_SECURE = True
-# CORS_ALLOW_CREDENTIALS = True
-
 REST_USE_JWT = True
-
-# JWT_AUTH_COOKIE = 'tn-auth'
-# JWT_AUTH_REFRESH_COOKIE = 'tn-refresh-token'
 
 ACCOUNT_EMAIL_VERIFICATION = 'none' # 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = False
@@ -192,27 +178,4 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(weeks=4),
     'AUTH_HEADER_TYPES': ('JWT', 'Bearer', 'Token'),
-
-#     'ROTATE_REFRESH_TOKENS': False,
-#     'BLACKLIST_AFTER_ROTATION': True,
-#     'UPDATE_LAST_LOGIN': False,
-
-#     'ALGORITHM': 'HS256',
-#     'SIGNING_KEY': settings.SECRET_KEY,
-#     'VERIFYING_KEY': None,
-#     'AUDIENCE': None,
-#     'ISSUER': None,
-#     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
-#     'USER_ID_FIELD': 'id',
-#     'USER_ID_CLAIM': 'user_id',
-#     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
-
-#     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-#     'TOKEN_TYPE_CLAIM': 'token_type',
-
-#     'JTI_CLAIM': 'jti',
-
-#     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-#     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
-#     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }

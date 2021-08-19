@@ -13,7 +13,6 @@ class BaseViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        print(self.request.user)
         user = self.request.user
         section = self.kwargs.get('section')
         objects = self.model.objects
